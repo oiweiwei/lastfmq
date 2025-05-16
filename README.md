@@ -135,7 +135,7 @@ lastfmq -wiki -tags "Fugazi"
 ## Querying an artist similar artists on page 15
 
 ```bash
-lastfmq -similar-artists -similar-artists-pages 15 "Fugazi"
+lastfmq -similar-artists -similar-artists-pages-offset 15 "Fugazi"
 ```
 
 ```json
@@ -169,7 +169,20 @@ lastfmq -similar-artists -similar-artists-pages 15 "Fugazi"
 }
 ```
 
+## Parallelizing requests using workers parameter
 
+> [!WARNING]
+> Be respectful to Last.fm and do not use too many workers. The default is 1 worker.
+
+```bash
+time lastfmq -tags -similar-artists -similar-artists-pages 25 -workers 20 fugazi
+{
+    ...
+}
+real	0m0.634s
+user	0m0.334s
+sys	0m0.071s
+```
 
 ## Installation
 
@@ -181,4 +194,18 @@ To install lastfmq, you can use the following command:
     git clone https://github.com/oiweiwei/lastfmq.git
     cd lastfmq/
     go install ./latfmq.go
+```
+
+### Download binary
+
+You can download the latest binary from the [releases page](https://github.com/oiweiwei/lastfmq/releases)
+
+```bash
+    # download the latest release for linux
+    gh release download --latest --pattern lastfmq-*-linux-amd64.tar.gz
+    # unpack the tarball
+    tar -xvf lastfmq-*-linux-amd64.tar.gz
+    # make it executable and move it to /usr/local/bin
+    chmod +x lastfmq
+    sudo mv lastfmq /usr/local/bin/
 ```
